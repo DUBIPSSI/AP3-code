@@ -9,13 +9,32 @@ function verifName(name) {
     const regex = /^[A-Z][a-z]{0,26}$/;
     return regex.test(name);
 }
-function verifMail(name) {
+function verifMail(mail) {
     const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return regex.test(name);
+    return regex.test(mail);
 }
-function verifMdp(name) {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9<>/'"`]).{12,}$/;
-    return regex.test(name);
+function verifMdp(mdp) {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regex.test(mdp);
+}
+function verifCodepostal(code) {
+    const regex = /^\d{5}$/;
+    return regex.test(code);
+}
+function verifbirthDate(date) {
+    var regex = /^\d{4}-\d{2}-\d{2}$/;
+    if (regex.test(date)) {
+        try {
+            const dateObj = new Date(date);
+            const currentDate = new Date();
+            const tenYearsAgo = new Date(currentDate.getFullYear() - 10, currentDate.getMonth(), currentDate.getDate());
+            return dateObj <= tenYearsAgo;
+        } catch (e) {
+            return false;
+        }
+    } else {
+        return false;
+    }
 }
 
 inputs.forEach(input => {
@@ -26,6 +45,11 @@ inputs.forEach(input => {
             verifMail(e.target.value) ? e.target.classList.remove('wrong') : e.target.classList.add('wrong');
         } else if (e.target.name === 'password') {
             verifMdp(e.target.value) ? e.target.classList.remove('wrong') : e.target.classList.add('wrong');
+        } else if (e.target.name === 'codePostal') {
+            verifCodepostal(e.target.value) ? e.target.classList.remove('wrong') : e.target.classList.add('wrong');
+        } else if (e.target.name === 'birthDate') {
+            console.log(e.target.value);
+            verifbirthDate(e.target.value) ? e.target.classList.remove('wrong') : e.target.classList.add('wrong');
         }
     });
 });
@@ -43,11 +67,10 @@ document.addEventListener('click', (e) => {
         const lastName = form.querySelector("#signupLastname").value;
         const email = form.querySelector("#signupEmail").value;
         const birthDate = form.querySelector("#signupBirthdate").value;
-        const codePostal = form.querySelector("#signupcodepostal").value;
-        const role = form.querySelector("#signupRole").value;
+        const codePostal = form.querySelector("#signupCodepostal").value;
+        const role = parseInt(form.querySelector("#signupRole").value);
         const password = form.querySelector("#signupPassword").value;
         const passwordConfirmation = form.querySelector("#signupPasswordConfirmation").value;
-
 
 
         axios.post('http://localhost:3000/post/add', {
@@ -75,8 +98,6 @@ document.addEventListener('click', (e) => {
 
             email: email,
             password: password,
-
-
         })
             .then(res => { console.log(res) })
             .catch(error => {

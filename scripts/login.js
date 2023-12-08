@@ -48,7 +48,6 @@ inputs.forEach(input => {
         } else if (e.target.name === 'codePostal') {
             verifCodepostal(e.target.value) ? e.target.classList.remove('wrong') : e.target.classList.add('wrong');
         } else if (e.target.name === 'birthDate') {
-            console.log(e.target.value);
             verifbirthDate(e.target.value) ? e.target.classList.remove('wrong') : e.target.classList.add('wrong');
         }
     });
@@ -72,21 +71,59 @@ document.addEventListener('click', (e) => {
         const password = form.querySelector("#signupPassword").value;
         const passwordConfirmation = form.querySelector("#signupPasswordConfirmation").value;
 
-
-        axios.post('http://localhost:3000/post/add', {
-
-            username: firstName,
-            userprenom: lastName,
-            email: email,
-            password: password,
-            birth: birthDate,
-            role: role,
-
-        })
-            .then(response=> console.log(response + 'ça fonctionne chef'))
-            .catch(error => {
-                console.log(error)
-            })
+        if (verifName(firstName)) {
+            if (verifName(lastName)) {
+                if (verifMail(email)) {
+                    if (verifbirthDate(birthDate)) {
+                        if (verifCodepostal(codePostal)) {
+                            axios.get('https://api-adresse.data.gouv.fr/search/?q=' + codePostal + '&limit=1')
+                                .then(res => {
+                                    let data = res.data;
+                                    let city = data.features[0].properties.city;
+                                    let contextArray = data.features[0].properties.context.split(", ");
+                                    let departement = contextArray[1];
+                                    if (verifMdp(password)) {
+                                        if (password === passwordConfirmation) {
+                                            console.log("ville : " + city + " departement : " + departement);
+                                            axios.post('http://localhost:3000/post/add', {
+                                                username: firstName,
+                                                userprenom: lastName,
+                                                email: email,
+                                                password: password,
+                                                birth: birthDate,
+                                                role: role,
+                                                departement: departement,
+                                                ville: city
+                                            })
+                                                .then(response => console.log(response + 'ça fonctionne chef'))
+                                                .catch(error => {
+                                                    console.log(error)
+                                                });
+                                        } else {
+                                            console.log('Les mots de passe ne correspondent pas');
+                                        }
+                                    } else {
+                                        console.log('mot de passe invalide');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error("Erreur lors de la récupération des données : ", error);
+                                });
+                        } else {
+                            console.log('code postal invalide');
+                        }
+                    } else {
+                        return console.log('birthdate invalide');
+                    }
+                } else {
+                    return console.log('mauvais mail');
+                }
+            } else {
+                return console.log('mauvais nom');
+            }
+        } else {
+            return console.log('mauvais prénom');
+        }
     }
     if (e.target.id == "signinbtn") {
         const form = e.target.closest("#signinForm");

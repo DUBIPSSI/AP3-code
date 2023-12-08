@@ -1,7 +1,8 @@
 import events from "./event.js";
+import axios from 'axios';
 const eventForm = document.querySelector('#eventForm');
 class Event {
-    constructor(titre, description, img, date, lieu, prix, capacite ) {
+    constructor(titre, description, img, date, lieu, prix, capacite) {
         this.titre = titre;
         this.description = description;
         this.img = img;
@@ -112,7 +113,7 @@ class Event {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     events.forEach(data => {
         let eventObj = new Event(data.titre, data.description, data.img, data.date, data.lieu, data.prix, data.capacite);
         let eventElement = eventObj.createEvent();
@@ -124,22 +125,49 @@ document.addEventListener('click', (e) => {
     if (e.target.closest('.likeIcon')) {
         e.target.closest('.likeIcon').classList.toggle('liked');
     }
-    if (e.target.closest('.commentIcon')) { 
+    if (e.target.closest('.commentIcon')) {
         e.target.closest('.commentIcon').classList.toggle('fillWhite');
         let eventElement = e.target.closest('.eventContainer');
         let commentaire = eventElement.querySelector('.commentaireEvent');
         commentaire.classList.toggle('deployed');
     }
-    if(e.target.closest('.messageBtn')){
+    if (e.target.closest('.messageBtn')) {
         e.target.closest('.messageBtn').classList.toggle('deployedMessage')
     }
-    if (e.target.id=='addevent'){
-        
+    if (e.target.id == 'addevent') {
+
         eventForm.classList.toggle('hidden')
     }
-    if (e.target.id=='backbutton'){
+    if (e.target.id == 'eventForm') {
         console.log(e.target.classList)
         eventForm.classList.toggle('hidden')
     }
-    
+    if (e.target.id === 'createbtn') {
+        // Récupérer les valeurs des champs du formulaire
+        const nom = eventForm.querySelector('#eventName').value;
+        const prix = parseInt(eventForm.querySelector('#eventPrix').value);
+        const date = eventForm.querySelector('#eventBirthdate').value;
+        const ville = eventForm.querySelector('#eventVille').value;
+        const description = eventForm.querySelector('#textar').value;
+        const capacite = parseInt(eventForm.querySelector('#eventCapacite').value);
+
+        console.log(nom, prix, date, ville, description, capacite);
+
+                axios.post('http://localhost:3000/post/addEvent', {
+                    nom: nom,
+                    description: description,
+                    lieu: ville,
+                    prix: prix,
+                    capacite: capacite,
+                    date: date,
+                })
+                    .then(response => {
+                        console.log("Réponse du serveur :", response.data);
+                    })
+                    .catch(error => {
+                        console.error("Erreur lors de la requête POST : ", error);
+                    });
+            
+    }
+
 });

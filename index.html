@@ -42,18 +42,21 @@
     <img id="addevent" src="assets/icons8-ajouter-50.png" alt="">
   </div>
 
-  <div id="eventForm" class="forms hidden" >
-    <div class="backform">
+  <div id="eventForm" class=" hidden" >
+    <div class="backform forms">
     <h2>Ajouter un évennement</h2>
     <div class="formContainer">
-      <input id="signupName" class="inputName" type="text" name="name" placeholder="Prénom">
-      <input id="signupLastname" type="text" name="name" placeholder="Nom">
-      <input id="signupEmail" type="mail" name="mail" placeholder="Mail">
-      <input id="signupBirthdate" type="date" name="birthDate" placeholder="Date de naissance">
-      <input id="signupCodepostal" type="number" name="ville" placeholder="Ville">
+      <input id="eventName" class="inputName" type="text" name="name" placeholder="titre">
+      <input id="eventPrix" type="number" name="prix" placeholder="prix">
+      <input id="eventBirthdate" type="date" name="birthDate" placeholder="Date de naissance">
+      <input id="eventVille" type="text" name="ville" placeholder="Ville">
+      <input id="eventCapacite" type="number" name="capacité" placeholder="capacité">
+   
     </div>
-    <button id="signupbtn">Créer</button>
-    <button  id="backbutton"> retour</button>
+    <textarea name="text" id="textar" cols="30" rows="10"></textarea>
+
+    <button id="createbtn">Créer</button>
+ 
   </div>
   </div>
 

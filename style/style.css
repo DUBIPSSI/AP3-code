@@ -306,15 +306,26 @@ nav img {
     height: 100vh;
     width: 100vw;
     background-color: rgba(0, 0, 0, 0.764);
+    
 
 }
 .backform {
     background-color: black;
     border-radius: 10px;
-    
+    border: solid 1px rgba(255, 255, 255, 0.655);
     padding: 30px;
     
       
+}
+#eventForm textarea {
+    margin-top: 20px;
+    margin-left: 50px;
+    width: 80%;
+    border-radius: 10px ;
+}
+.btn {
+    display: flex;
+    justify-content: space-between;
 }
 
 /* Message */

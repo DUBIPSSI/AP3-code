@@ -1,5 +1,5 @@
 import events from "./event.js";
-
+const eventForm = document.querySelector('#eventForm');
 class Event {
     constructor(titre, description, img, date, lieu, prix, capacite ) {
         this.titre = titre;
@@ -124,7 +124,7 @@ document.addEventListener('click', (e) => {
     if (e.target.closest('.likeIcon')) {
         e.target.closest('.likeIcon').classList.toggle('liked');
     }
-    if (e.target.closest('.commentIcon')) {
+    if (e.target.closest('.commentIcon')) { 
         e.target.closest('.commentIcon').classList.toggle('fillWhite');
         let eventElement = e.target.closest('.eventContainer');
         let commentaire = eventElement.querySelector('.commentaireEvent');
@@ -133,4 +133,13 @@ document.addEventListener('click', (e) => {
     if(e.target.closest('.messageBtn')){
         e.target.closest('.messageBtn').classList.toggle('deployedMessage')
     }
+    if (e.target.id=='addevent'){
+        
+        eventForm.classList.toggle('hidden')
+    }
+    if (e.target.id=='backbutton'){
+        console.log(e.target.classList)
+        eventForm.classList.toggle('hidden')
+    }
+    
 });

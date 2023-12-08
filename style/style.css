@@ -210,6 +210,11 @@ nav img {
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
+#eventForm .formContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
 .forms input {
     padding: 13px;
     border: none;
@@ -240,6 +245,7 @@ nav img {
 .forms button{
     width: fit-content;
     background-color: #fec816;
+    margin-top: 10px;
     padding: 10px;
     color: white;
     border-radius: 5px;
@@ -286,6 +292,29 @@ nav img {
 
 .deployedMessage img{
     transform: rotate(180deg);
+}
+
+.hidden {
+    display: none !important;
+}
+
+#eventForm {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.764);
+
+}
+.backform {
+    background-color: black;
+    border-radius: 10px;
+    
+    padding: 30px;
+    
+      
 }
 
 /* Message */

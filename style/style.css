@@ -219,6 +219,7 @@ nav img {
     border: 1px solid transparent;
     border-radius: 5px;
     color: white;
+    outline: none;
 }
 .forms input:hover {
     border: 1px solid #fec816;
@@ -250,6 +251,10 @@ nav img {
 .formDiv{
     display: flex;
     gap: 20px;
+}
+
+.wrong {
+    border: 1px solid red !important;
 }
 
 /* Profil */

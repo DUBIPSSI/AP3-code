@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Connexion</title>
+    <script src="scripts/login.js" type="module" defer></script>
+</head>
+
+<body>
+    <nav>
+        <img src="assets/logo_m2l.png" alt="">
+        <div class="navE">
+            <img src="assets/home.svg" alt="">
+            <a href="./">Accueil</a>
+        </div>
+        <div class="navE">
+            <img src="assets/contact.svg" alt="">
+            <a href="/contact">Contact</a>
+        </div>
+        <div class="navE">
+            <img src="assets/search.svg" alt="">
+            <a href="/rechercher">Rechercher</a>
+        </div>
+        <div class="navE">
+            <img src="assets/profil.svg" alt="">
+            <a href="/profil">Profil</a>
+        </div>
+    </nav>
+
+    <div id="message">
+        <h2 class="messageBtn">Messages <img src="assets/chevron.svg" alt="image de chevron" height="40px"></h2>
+    </div>
+
+    <div id="loginContainer">
+        <div id="onglets">
+            <p id="signinOnglet" class="selectedOnglet">Se connecter</p>
+            <p id="signupOnglet">S'enregistrer</p>
+        </div>
+        <div id="signinForm" class="forms">
+            <h2>Se connecter</h2>
+            <input id="signupmail" type="text" name="mail" placeholder="Mail">
+            <input id="signupmdp" type="password" name="password" placeholder="Mot de passe">
+            <button id="signinbtn">Se connecter</button>
+        </div>
+        <div id="signupForm" class="forms notSelectedForm">
+            <h2>S'inscrire</h2>
+            <div class="formContainer">
+                <input id="signupname" type="text" name="firstname" placeholder="Prénom">
+                <input id="signuplastname" type="text" name="lastname" placeholder="Nom">
+                <input id="signupemail" type="mail" name="mail" placeholder="Mail">
+                <input id="signupbirthdate" type="date" name="birthDate" placeholder="Date de naissance">
+                <input id="signupcodepostal" type="number" name="codePostal" placeholder="Code postale">
+                <select id="signuprole" name="role">
+                    <option value="random">random</option>
+                    <option value="Association">Association</option>
+                </select>
+                <input id="signuppassword" type="password" name="password" placeholder="Mot de passe">
+                <input type="password" name="passwordConfirmation" placeholder="Confirmation du mot de passe">
+            </div>
+            <button id="signupbtn">S'inscrire</button>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,286 @@
+body{
+    padding: 0;
+    margin: 0;
+    background-color: black;
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+}
+
+* {
+    transition: 250ms;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Nav */
+
+nav {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    padding: 30px;
+    gap: 15px;
+}
+
+nav a {
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    font-weight: 500;
+    font-size: 25px;
+    text-decoration: none;
+}
+
+nav a:hover{
+    text-decoration: underline;
+}
+
+nav img {
+    width: 200px;
+}
+
+.navE {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.navE img {
+    width: 30px;
+}
+
+
+/* Nav */
+
+/* Event */
+
+#eventsContainer{
+    width: 50%;
+    color: white;
+    overflow-y: scroll;
+    height: 100vh;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+#eventsContainer::-webkit-scrollbar {
+    display: none;
+}
+
+#eventsContainer p{
+    margin: 0;
+    line-height: 24px;
+}
+#eventsContainer h3{
+    margin: 0;
+    margin-bottom: 15px;
+}
+.eventContainer{
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    gap: 20px;
+    border-bottom: 1px solid #fec816;
+    border-right: 1px solid #fec816;
+    border-left: 1px solid #fec816;
+}
+
+.eventContainer img {
+    width: 100%;
+}
+
+.eventFooter {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.infoContainer{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.otherInfo{
+    text-align: end;
+}
+.eventFooter{
+    display: flex;
+    justify-content: space-between;
+}
+.footerIcons{
+    display: flex;
+    gap: 25px;
+}
+.eventFooter button{
+    background-color: #fec816;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    padding: 10px;
+}
+.eventFooter button:hover{
+    box-shadow: 0 0 7px #fec816;
+}
+
+.likeIcon svg{
+    max-width: 30px;
+}
+.likeIcon:hover path{
+    stroke: red;
+}
+.liked path{
+    fill: red;
+    stroke: red;
+}
+.commentIcon svg{
+    max-width: 30px;
+}
+.commentIcon:hover path{
+    fill: white;
+}
+
+.commentaireEvent{
+    opacity: 0%;
+    height: 0px;
+}
+.deployed{
+    height: 300px !important;
+    opacity: 100%;
+}
+.commentaireEvent h2 {
+    margin: 0;
+}
+.fillWhite path {
+    fill: white;
+}
+/* Event */
+
+/* Profil */
+
+#loginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 50px;
+}
+
+#onglets {
+    display: flex;
+    justify-content: space-around;
+    justify-content: center;
+    margin-top: 30px;
+    border: 1px solid #fec816;
+    padding: 0px;
+    user-select: none;
+}
+
+#onglets p {
+    color: white;
+    margin: 0;
+    padding: 13px;
+    padding-left: 18px;
+    padding-right: 18px;
+    cursor: pointer;
+}
+
+.selectedOnglet {
+    background-color: #fec816;
+}
+
+.notSelectedForm {
+    display: none !important;
+}
+
+.forms {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid #fec816;
+    border-radius: 20px;
+}
+.forms h2 {
+    text-align: center;
+}
+#signinForm input{
+    width: 250px !important;
+}
+#signupForm .formContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.forms input {
+    padding: 13px;
+    border: none;
+    min-width: 250px;
+    max-width: 250px;
+    background-color: rgb(15 20 25);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    color: white;
+}
+.forms input:hover {
+    border: 1px solid #fec816;
+}
+.forms select {
+    padding: 13px;
+    border: none;
+    min-width: 250px;
+    max-width: 250px;
+    background-color: rgb(15 20 25);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    color: white;
+}
+.forms select:hover{
+    border: 1px solid #fec816;
+}
+.forms button{
+    width: fit-content;
+    background-color: #fec816;
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+    border: none;
+}
+.forms button:hover{
+    background-color: #cda111;
+}
+.formDiv{
+    display: flex;
+    gap: 20px;
+}
+
+/* Profil */
+
+/* Message */
+
+#message {
+    position: absolute;
+    bottom: 0;
+    right: 40px;
+    height: 50px;
+    background-color: rgb(22 24 28);
+    padding: 15px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    transition: 250ms ease-in-out;
+}
+#message h2 {
+    margin: 0;
+    color: white;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    cursor: pointer;
+}
+.deployedMessage {
+    height: 500px;
+}
+
+.deployedMessage img{
+    transform: rotate(180deg);
+}
+
+/* Message */

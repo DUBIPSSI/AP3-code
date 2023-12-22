@@ -113,28 +113,6 @@ class Event {
     }
 }
 
-document.addEventListener('DOMContentLoaded',async function () {
-    const bangbang =  await getEvent()
-    console.log(bangbang);
-    bangbang.forEach(data => {
-       
-
-// Diviser la chaîne en date et heure
-const [datePart, timePart] = data.date.split('T');
-
-// Extraire la partie de la date
-const [year, month, day] = datePart.split('-');
-
-// Former la date dans le format souhaité
-const formattedDate = `${day}/${month}/${year}`;
-
-  
-     
-        let eventObj = new Event(data.titre, data.description, "assets/imgEvent/tournoiFoot.png", formattedDate, data.lieu, data.prix, data.capacite);
-        let eventElement = eventObj.createEvent();
-        eventsContainer.appendChild(eventElement);
-    });
-});
 
 document.addEventListener('click', (e) => {
     if (e.target.closest('.likeIcon')) {
@@ -178,6 +156,8 @@ document.addEventListener('click', (e) => {
                 })
                     .then(response => {
                         console.log("Réponse du serveur :", response.data);
+                        e.target.closest('#eventForm').classList.add('hidden')
+                        leBang();
                     })
                     .catch(error => {
                         console.error("Erreur lors de la requête POST : ", error);
@@ -202,3 +182,38 @@ async function getEvent() {
     }
     return res
 }
+async function leBang() {
+    const eventsContainer = document.getElementById('eventsContainer');
+    eventsContainer.innerHTML = ``;
+    try {
+        const bangbang = await getEvent();
+
+        console.log(bangbang);
+
+        bangbang.forEach(data => {
+            // Diviser la chaîne en date et heure
+            const [datePart, timePart] = data.date.split('T');
+
+            // Extraire la partie de la date
+            const [year, month, day] = datePart.split('-');
+
+            // Former la date dans le format souhaité
+            const formattedDate = `${day}/${month}/${year}`;
+
+            // Supposons que la classe Event soit définie ailleurs dans votre code
+            let eventObj = new Event(data.nom, data.description, "assets/imgEvent/tournoiFoot.png", formattedDate, data.lieu, data.prix, data.capacite);
+            
+            // Supposons que eventsContainer soit défini ailleurs dans votre code
+            let eventElement = eventObj.createEvent();
+            
+            // Supposons que eventsContainer soit défini ailleurs dans votre code
+            eventsContainer.appendChild(eventElement);
+        });
+    } catch (error) {
+        console.error("Une erreur s'est produite :", error);
+    }
+
+}
+
+// Appelez la fonction leBang pour l'exécuter
+leBang();

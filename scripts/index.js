@@ -113,9 +113,24 @@ class Event {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    events.forEach(data => {
-        let eventObj = new Event(data.titre, data.description, data.img, data.date, data.lieu, data.prix, data.capacite);
+document.addEventListener('DOMContentLoaded',async function () {
+    const bangbang =  await getEvent()
+    console.log(bangbang);
+    bangbang.forEach(data => {
+       
+
+// Diviser la chaîne en date et heure
+const [datePart, timePart] = data.date.split('T');
+
+// Extraire la partie de la date
+const [year, month, day] = datePart.split('-');
+
+// Former la date dans le format souhaité
+const formattedDate = `${day}/${month}/${year}`;
+
+  
+     
+        let eventObj = new Event(data.titre, data.description, "assets/imgEvent/tournoiFoot.png", formattedDate, data.lieu, data.prix, data.capacite);
         let eventElement = eventObj.createEvent();
         eventsContainer.appendChild(eventElement);
     });
@@ -170,4 +185,20 @@ document.addEventListener('click', (e) => {
             
     }
 
-});
+
+
+}
+);
+async function getEvent() {
+    const res = []
+    try {
+         await axios.get('http://localhost:3000/get/evenement')
+         .then(response =>{
+              res.push(...response.data) ;
+            })
+            } catch (error) {
+        console.error("Une erreur s'est produite lors de la récupération de l'événement:", error);
+        throw error; 
+    }
+    return res
+}

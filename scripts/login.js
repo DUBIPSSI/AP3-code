@@ -52,6 +52,9 @@ inputs.forEach(input => {
         }
     });
 });
+window.addEventListener('load', ()=>{
+    
+})
 
 document.addEventListener('click', (e) => {
     if (e.target.closest('#onglets')) {
@@ -95,7 +98,10 @@ document.addEventListener('click', (e) => {
                                                 departement: departement,
                                                 ville: city
                                             })
-                                                .then(response => console.log(response + 'ça fonctionne chef'))
+                                                .then(response => {
+                                                    console.log(response + 'ça fonctionne chef');
+                                                    document.location.href = "/";
+                                                })
                                                 .catch(error => {
                                                     console.log(error)
                                                 });
@@ -136,7 +142,13 @@ document.addEventListener('click', (e) => {
             email: email,
             password: password,
         })
-            .then(res => { console.log(res) })
+            .then(res => {
+                console.log(res.data.token);
+                var now = new Date();
+                now.setTime(now.getTime() + (2 * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + now.toUTCString();
+                document.cookie = "loginToken=" + res.data.token + "; " + expires + "; path=/";
+            })
             .catch(error => {
                 console.log(error)
             })

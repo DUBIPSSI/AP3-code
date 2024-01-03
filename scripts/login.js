@@ -1,9 +1,18 @@
 import axios from 'axios';
+import { isLogged, getCookieValue } from './tools';
+
 const signinOnglet = document.querySelector('#signinOnglet');
 const signupOnglet = document.querySelector('#signupOnglet');
 const signinForm = document.querySelector('#signinForm');
 const signupForm = document.querySelector('#signupForm');
 const inputs = document.querySelectorAll('input')
+
+window.addEventListener('load', async () => {
+    let token = getCookieValue('loginToken');
+    if (await isLogged(token)) {
+        window.location.href = '/profil';
+    }
+});
 
 function verifName(name) {
     const regex = /^[A-Z][a-z]{0,26}$/;
@@ -52,8 +61,8 @@ inputs.forEach(input => {
         }
     });
 });
-window.addEventListener('load', ()=>{
-    
+window.addEventListener('load', () => {
+
 })
 
 document.addEventListener('click', (e) => {

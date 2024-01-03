@@ -13,15 +13,37 @@ window.addEventListener('load', () => {
     return null;
   }
 
-  // Utilisez cette fonction pour obtenir le token
   let token = getCookieValue('loginToken');
-  console.log(token);
-  axios
-    .get(`http://localhost:3000/get/user?token=${token}`)
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((error) => {
-      console.error('Erreur lors de la requête:', error);
-    });
+  if (token) {
+    axios.get(`http://localhost:3000/get/user?token=${token}`)
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.result == true) {
+          axios.get(`http://localhost:3000/get/utilisateur?email=${response.data.email}`)
+            .then((response) => {
+              console.log(response.data);
+              nom = document.getElementById('nom');
+              nom.textContent = response.data.nom;
+            })
+            .catch((error) => {
+              console.error('Erreur lors de la requête:', error);
+            });
+        } else {
+          window.location.href = '/login';
+        }
+      })
+      .catch((error) => {
+        console.error('Erreur lors de la requête:', error);
+      });
+  } else {
+    window.location.href = '/login';
+  }
+});
+
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('logout')) {
+    console.log('baka');
+    document.cookie = 'loginToken' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+    window.location.reload();
+  }
 });

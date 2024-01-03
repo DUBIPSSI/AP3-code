@@ -10,6 +10,7 @@ body{
 * {
     transition: 250ms;
     font-family: 'Poppins', sans-serif;
+    color: white;
 }
 
 /* Nav */
@@ -261,6 +262,18 @@ nav img {
 
 .wrong {
     border: 1px solid red !important;
+}
+
+.logout {
+    background-color: red;
+    border: none;
+    border-radius: 7px;
+    padding: 10px;
+    color: white;
+}
+.logout:hover {
+    cursor: pointer;
+    box-shadow: 0 0 8px red;
 }
 
 /* Profil */

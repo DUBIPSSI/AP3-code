@@ -148,6 +148,7 @@ document.addEventListener('click', (e) => {
                 now.setTime(now.getTime() + (2 * 24 * 60 * 60 * 1000));
                 var expires = "expires=" + now.toUTCString();
                 document.cookie = "loginToken=" + res.data.token + "; " + expires + "; path=/";
+                window.location.href = '/profil';
             })
             .catch(error => {
                 console.log(error)

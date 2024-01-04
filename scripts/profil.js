@@ -12,6 +12,10 @@ window.addEventListener('load', async () => {
         document.getElementById('naissance').textContent = response.data[0].date_de_naissance;
         document.getElementById('mail').textContent = response.data[0].mail;
         document.getElementById('avatar').src = 'assets/' + response.data[0].avatar;
+        var now = new Date();
+        now.setTime(now.getTime() + (2 * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + now.toUTCString();
+        document.cookie = "mail=" + response.data[0].mail + "; " + expires + "; path=/";
       })
       .catch((error) => {
         console.error('Erreur lors de la requête:', error);
@@ -34,6 +38,17 @@ document.addEventListener('click', (e) => {
     document.querySelector('.newAvatarContainer').style.display = "none";
   }
   if (e.target.classList.contains('newAvatar')) {
-    
+    const avatar = e.target.alt;
+    axios.post('http://localhost:3000/update/updateAvatar', {
+        avatar: avatar,
+        email: getCookieValue('mail')
+    })
+      .then(response => {
+        console.log(response);
+        document.getElementById('avatar').src = 'assets/' + avatar;
+      })
+      .catch(error => {
+        console.log(error)
+      });
   }
 });

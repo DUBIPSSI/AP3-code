@@ -108,8 +108,11 @@ document.addEventListener('click', (e) => {
                                                 ville: city
                                             })
                                                 .then(response => {
-                                                    console.log(response + 'ça fonctionne chef');
-                                                    document.location.href = "/";
+                                                    var now = new Date();
+                                                    now.setTime(now.getTime() + (2 * 24 * 60 * 60 * 1000));
+                                                    var expires = "expires=" + now.toUTCString();
+                                                    document.cookie = "loginToken=" + response.data.token + "; " + expires + "; path=/";
+                                                    window.location.href = '/profil';
                                                 })
                                                 .catch(error => {
                                                     console.log(error)
@@ -147,12 +150,10 @@ document.addEventListener('click', (e) => {
         const password = form.querySelector("#signupmdp").value;
 
         axios.post('http://localhost:3000/post/login', {
-
             email: email,
             password: password,
         })
             .then(res => {
-                console.log(res.data.token);
                 var now = new Date();
                 now.setTime(now.getTime() + (2 * 24 * 60 * 60 * 1000));
                 var expires = "expires=" + now.toUTCString();

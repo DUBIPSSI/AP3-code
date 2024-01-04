@@ -154,7 +154,7 @@ nav img {
 }
 /* Event */
 
-/* Profil */
+/* Login */
 
 #loginContainer {
     display: flex;
@@ -264,6 +264,63 @@ nav img {
     border: 1px solid red !important;
 }
 
+
+/* Login*/
+
+
+/* Profil */
+
+#profil header {
+    display: flex;
+    margin-bottom: 50px;
+}
+#profil .avatarContainer{
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+}
+#profil #avatar{
+    width: 200px;
+}
+#edit-avatar img {
+    width: 100px;
+    padding: 50px;
+}
+#profil #edit-avatar {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.473);
+    opacity: 0%;
+}
+#profil #edit-avatar:hover{
+    opacity: 100%;
+}
+.newAvatarContainer{
+    display: none;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.404);
+    height: 100vh;
+    width: 100vw;
+}
+
+.newAvatarCont {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 20px;
+    gap: 20px;
+    background-color: black;
+    border:1px solid #cda111;
+    border-radius: 10px;
+}
+.newAvatar{
+    width: 100px;
+}
+.newAvatar:hover {
+    background-color: #cda111;
+    border-radius: 10px;
+}
 .logout {
     background-color: red;
     border: none;

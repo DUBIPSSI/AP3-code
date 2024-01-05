@@ -411,4 +411,11 @@ nav img {
     justify-content: space-between;
 }
 
+#search-bar {
+    margin-top: 50px;
+    margin-left: 40px;
+    width: 300px;
+    border-radius: 10px;
+    border-style: none;
+}
 /* Message */

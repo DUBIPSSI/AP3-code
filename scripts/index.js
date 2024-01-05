@@ -1,8 +1,8 @@
-import events from "./event.js";
+import { isLogged, getCookieValue } from './tools';
 import axios from 'axios';
 const eventForm = document.querySelector('#eventForm');
 class Event {
-    constructor(titre, description, img, date, lieu, prix, capacite) {
+    constructor(titre, description, img, date, lieu, prix, capacite, id) {
         this.titre = titre;
         this.description = description;
         this.img = img;
@@ -10,11 +10,13 @@ class Event {
         this.lieu = lieu;
         this.prix = prix;
         this.capacite = capacite;
+        this.id = id;
     }
 
     createEvent() {
         let eventContainer = document.createElement('div');
         eventContainer.className = 'eventContainer';
+        eventContainer.id = this.id;
 
         let img = document.createElement('img');
         img.src = this.img;
@@ -65,13 +67,6 @@ class Event {
             </svg>`;
         commentIcon.className = "commentIcon";
 
-        let likeIcon = document.createElement('div');
-        likeIcon.innerHTML = `
-            <svg class="likeSvg" width="30px" height="30px" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#fec816" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>`;
-        likeIcon.className = "likeIcon";
-
         let joinBtn = document.createElement('button');
         joinBtn.className = "joinBtn";
         joinBtn.textContent = "Participer";
@@ -96,7 +91,6 @@ class Event {
         infoContainer.appendChild(otherInfo);
 
         eventFooterIcons.appendChild(commentIcon)
-        eventFooterIcons.appendChild(likeIcon)
 
         eventFooter.appendChild(eventFooterIcons);
         eventFooter.appendChild(joinBtn);
@@ -136,7 +130,6 @@ document.addEventListener('click', (e) => {
         eventForm.classList.toggle('hidden')
     }
     if (e.target.id === 'createbtn') {
-        // Récupérer les valeurs des champs du formulaire
         const nom = eventForm.querySelector('#eventName').value;
         const prix = parseInt(eventForm.querySelector('#eventPrix').value);
         const date = eventForm.querySelector('#eventBirthdate').value;
@@ -146,23 +139,54 @@ document.addEventListener('click', (e) => {
 
         console.log(nom, prix, date, ville, description, capacite);
 
-                axios.post('http://localhost:3000/post/addEvent', {
-                    nom: nom,
-                    description: description,
-                    lieu: ville,
-                    prix: prix,
-                    capacite: capacite,
-                    date: date,
-                })
-                    .then(response => {
-                        console.log("Réponse du serveur :", response.data);
-                        e.target.closest('#eventForm').classList.add('hidden')
-                        leBang();
-                    })
-                    .catch(error => {
-                        console.error("Erreur lors de la requête POST : ", error);
-                    });
-            
+        axios.post('http://localhost:3000/post/addEvent', {
+            nom: nom,
+            description: description,
+            lieu: ville,
+            prix: prix,
+            capacite: capacite,
+            date: date,
+        })
+            .then(response => {
+                console.log("Réponse du serveur :", response.data);
+                e.target.closest('#eventForm').classList.add('hidden')
+                leBang();
+            })
+            .catch(error => {
+                console.error("Erreur lors de la requête POST : ", error);
+            });
+
+    }
+    if (e.target.classList.contains('joinBtn')) {
+        const id = e.target.closest('.eventContainer').id;
+        const token = getCookieValue('loginToken');
+        console.log(id, token);
+        axios.post('http://localhost:3000/post/addParticipation', {
+            event_id : id,
+            token: token
+        })
+            .then(response => {
+                e.target.textContent = "Rejoins";
+                e.target.className = 'joined';
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    }
+    if (e.target.classList.contains('joined')) {
+        const id = e.target.closest('.eventContainer').id;
+        const token = getCookieValue('loginToken');
+        axios.post('http://localhost:3000/post/deleteParticipation', {
+            event_id : id,
+            token: token
+        })
+            .then(response => {
+                e.target.textContent = "Participer";
+                e.target.className = 'joinBtn';
+            })
+            .catch(error => {
+                console.log(error)
+            });
     }
 
 
@@ -172,13 +196,13 @@ document.addEventListener('click', (e) => {
 async function getEvent() {
     const res = []
     try {
-         await axios.get('http://localhost:3000/get/evenement')
-         .then(response =>{
-              res.push(...response.data) ;
+        await axios.get('http://localhost:3000/get/evenement')
+            .then(response => {
+                res.push(...response.data);
             })
-            } catch (error) {
+    } catch (error) {
         console.error("Une erreur s'est produite lors de la récupération de l'événement:", error);
-        throw error; 
+        throw error;
     }
     return res
 }
@@ -201,11 +225,11 @@ async function leBang() {
             const formattedDate = `${day}/${month}/${year}`;
 
             // Supposons que la classe Event soit définie ailleurs dans votre code
-            let eventObj = new Event(data.nom, data.description, "assets/imgEvent/tournoiFoot.png", formattedDate, data.lieu, data.prix, data.capacite);
-            
+            let eventObj = new Event(data.nom, data.description, "assets/imgEvent/tournoiFoot.png", formattedDate, data.lieu, data.prix, data.capacite, data.id);
+
             // Supposons que eventsContainer soit défini ailleurs dans votre code
             let eventElement = eventObj.createEvent();
-            
+
             // Supposons que eventsContainer soit défini ailleurs dans votre code
             eventsContainer.appendChild(eventElement);
         });

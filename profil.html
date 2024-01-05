@@ -34,17 +34,37 @@
         </div>
     </nav>
 
-    <div id="message">
-        <h2 class="messageBtn">Messages <img src="assets/chevron.svg" alt="image de chevron" height="40px"></h2>
-    </div>
-
-    <div>
-        <h1>Mon profil</h1>
-        <p>nom : <span id='nom'></span></p>
-        <p>prénom : <span id='prenom'></span></p>
-        <p>date de naissance : <span id='naissance'></span></p>
-        <p>mail : <span id='mail'></span></p>
+    <div id="profil">
+        <header>
+            <div class="avatarContainer">
+                <img id="avatar" src="" alt="avatar de batman">
+                <div id="edit-avatar">
+                    <img src="assets/edit_avatar.svg" alt="">
+                </div>
+            </div>
+            <div id="infos">
+                <h1>Mon profil</h1>
+                <p>nom : <span id='nom'></span></p>
+                <p>prénom : <span id='prenom'></span></p>
+                <p>date de naissance : <span id='naissance'></span></p>
+                <p>mail : <span id='mail'></span></p>
+            </div>
+        </header>
+        <div id="profilOnglets">
+            <p>Participations</p>
+            <p>Cramptex</p>
+        </div>
         <button class="logout">Déconnexion</button>
+    </div>
+    <div class="newAvatarContainer">
+        <div class="newAvatarCont">
+            <img class="newAvatar" src="assets/batman.svg" alt="batman.svg">
+            <img class="newAvatar" src="assets/builder.svg" alt="builder.svg">
+            <img class="newAvatar" src="assets/girl.svg" alt="girl.svg">
+            <img class="newAvatar" src="assets/lazybone.svg" alt="lazybone.svg">
+            <img class="newAvatar" src="assets/man.svg" alt="man.svg">
+            <img class="newAvatar" src="assets/woman.svg" alt="woman.svg">
+        </div>
     </div>
 </body>
 

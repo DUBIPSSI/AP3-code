@@ -272,7 +272,6 @@ nav img {
 
 #profil header {
     display: flex;
-    margin-bottom: 50px;
 }
 #profil .avatarContainer{
     display: flex;
@@ -320,6 +319,20 @@ nav img {
 .newAvatar:hover {
     background-color: #cda111;
     border-radius: 10px;
+}
+#profilOnglets {
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    justify-content: space-between;
+}
+#profilOnglets p{
+    margin: 0;
+    width: 50%;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid gray;
+    padding: 8px;
 }
 .logout {
     background-color: red;

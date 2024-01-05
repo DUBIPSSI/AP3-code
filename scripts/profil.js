@@ -44,8 +44,8 @@ document.addEventListener('click', (e) => {
         email: getCookieValue('mail')
     })
       .then(response => {
-        console.log(response);
         document.getElementById('avatar').src = 'assets/' + avatar;
+        document.querySelector('.newAvatarContainer').style.display = "none";
       })
       .catch(error => {
         console.log(error)

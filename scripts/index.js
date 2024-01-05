@@ -1,8 +1,8 @@
-import events from "./event.js";
+import { isLogged, getCookieValue } from './tools';
 import axios from 'axios';
 const eventForm = document.querySelector('#eventForm');
 class Event {
-    constructor(titre, description, img, date, lieu, prix, capacite) {
+    constructor(titre, description, img, date, lieu, prix, capacite, id) {
         this.titre = titre;
         this.description = description;
         this.img = img;
@@ -10,11 +10,13 @@ class Event {
         this.lieu = lieu;
         this.prix = prix;
         this.capacite = capacite;
+        this.id = id;
     }
 
     createEvent() {
         let eventContainer = document.createElement('div');
         eventContainer.className = 'eventContainer';
+        eventContainer.id = this.id;
 
         let img = document.createElement('img');
         img.src = this.img;
@@ -128,7 +130,6 @@ document.addEventListener('click', (e) => {
         eventForm.classList.toggle('hidden')
     }
     if (e.target.id === 'createbtn') {
-        // Récupérer les valeurs des champs du formulaire
         const nom = eventForm.querySelector('#eventName').value;
         const prix = parseInt(eventForm.querySelector('#eventPrix').value);
         const date = eventForm.querySelector('#eventBirthdate').value;
@@ -138,23 +139,54 @@ document.addEventListener('click', (e) => {
 
         console.log(nom, prix, date, ville, description, capacite);
 
-                axios.post('http://localhost:3000/post/addEvent', {
-                    nom: nom,
-                    description: description,
-                    lieu: ville,
-                    prix: prix,
-                    capacite: capacite,
-                    date: date,
-                })
-                    .then(response => {
-                        console.log("Réponse du serveur :", response.data);
-                        e.target.closest('#eventForm').classList.add('hidden')
-                        leBang();
-                    })
-                    .catch(error => {
-                        console.error("Erreur lors de la requête POST : ", error);
-                    });
-            
+        axios.post('http://localhost:3000/post/addEvent', {
+            nom: nom,
+            description: description,
+            lieu: ville,
+            prix: prix,
+            capacite: capacite,
+            date: date,
+        })
+            .then(response => {
+                console.log("Réponse du serveur :", response.data);
+                e.target.closest('#eventForm').classList.add('hidden')
+                leBang();
+            })
+            .catch(error => {
+                console.error("Erreur lors de la requête POST : ", error);
+            });
+
+    }
+    if (e.target.classList.contains('joinBtn')) {
+        const id = e.target.closest('.eventContainer').id;
+        const token = getCookieValue('loginToken');
+        console.log(id, token);
+        axios.post('http://localhost:3000/post/addParticipation', {
+            event_id : id,
+            token: token
+        })
+            .then(response => {
+                e.target.textContent = "Rejoins";
+                e.target.className = 'joined';
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    }
+    if (e.target.classList.contains('joined')) {
+        const id = e.target.closest('.eventContainer').id;
+        const token = getCookieValue('loginToken');
+        axios.post('http://localhost:3000/post/deleteParticipation', {
+            event_id : id,
+            token: token
+        })
+            .then(response => {
+                e.target.textContent = "Participer";
+                e.target.className = 'joinBtn';
+            })
+            .catch(error => {
+                console.log(error)
+            });
     }
 
 
@@ -164,13 +196,13 @@ document.addEventListener('click', (e) => {
 async function getEvent() {
     const res = []
     try {
-         await axios.get('http://localhost:3000/get/evenement')
-         .then(response =>{
-              res.push(...response.data) ;
+        await axios.get('http://localhost:3000/get/evenement')
+            .then(response => {
+                res.push(...response.data);
             })
-            } catch (error) {
+    } catch (error) {
         console.error("Une erreur s'est produite lors de la récupération de l'événement:", error);
-        throw error; 
+        throw error;
     }
     return res
 }
@@ -193,11 +225,11 @@ async function leBang() {
             const formattedDate = `${day}/${month}/${year}`;
 
             // Supposons que la classe Event soit définie ailleurs dans votre code
-            let eventObj = new Event(data.nom, data.description, "assets/imgEvent/tournoiFoot.png", formattedDate, data.lieu, data.prix, data.capacite);
-            
+            let eventObj = new Event(data.nom, data.description, "assets/imgEvent/tournoiFoot.png", formattedDate, data.lieu, data.prix, data.capacite, data.id);
+
             // Supposons que eventsContainer soit défini ailleurs dans votre code
             let eventElement = eventObj.createEvent();
-            
+
             // Supposons que eventsContainer soit défini ailleurs dans votre code
             eventsContainer.appendChild(eventElement);
         });

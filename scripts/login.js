@@ -108,6 +108,7 @@ document.addEventListener('click', (e) => {
                                                 ville: city
                                             })
                                                 .then(response => {
+                                                    console.log(response);
                                                     var now = new Date();
                                                     now.setTime(now.getTime() + (2 * 24 * 60 * 60 * 1000));
                                                     var expires = "expires=" + now.toUTCString();

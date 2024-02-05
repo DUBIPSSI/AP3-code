@@ -97,7 +97,7 @@ document.addEventListener('click', (e) => {
                                     if (verifMdp(password)) {
                                         if (password === passwordConfirmation) {
                                             console.log("ville : " + city + " departement : " + departement);
-                                            axios.post('http://localhost:3000/post/add', {
+                                            axios.post('http://m2l.site:3000/post/add', {
                                                 username: firstName,
                                                 userprenom: lastName,
                                                 email: email,
@@ -150,7 +150,7 @@ document.addEventListener('click', (e) => {
         const email = form.querySelector("#signupmail").value;
         const password = form.querySelector("#signupmdp").value;
 
-        axios.post('http://localhost:3000/post/login', {
+        axios.post('http://m2l.site:3000/post/login', {
             email: email,
             password: password,
         })

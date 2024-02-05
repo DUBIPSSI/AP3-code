@@ -412,7 +412,7 @@ nav img {
 }
 
 #search-bar {
-    margin-top: 50px;
+    padding: 10px;
     margin-left: 40px;
     width: 300px;
     border-radius: 10px;

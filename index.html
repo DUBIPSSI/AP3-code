@@ -48,7 +48,7 @@
       <input id="eventBirthdate" type="date" name="birthDate" placeholder="Date de naissance">
       <input id="eventVille" type="text" name="ville" placeholder="Ville">
       <input id="eventCapacite" type="number" name="capacité" placeholder="capacité">
-      <select name="cate" id="categorie"> 
+      <select  id="eventCategorie" name="categorie"> 
         <option value="Football">Football</option>
         <option value="Basketball">Basketball</option>
         <option value="VolleyBall">VolleyBall</option>
@@ -66,10 +66,13 @@
   </div>
 
   <div id="search">
-    <input id="search-bar" type="text">
-    
-  </div>
-
+    <input style="color: black;" id="search-bar" type="text" placeholder="Rechercher...">
+    <select name="op" id="op">
+      <option value="nom">titre</option>
+      <option value="nom_utilisateur">utilisateur</option>
+    </select>
+    <button id="search-btn">Rechercher</button>
+</div>
 </body>
 
 </html>

@@ -1,8 +1,15 @@
 import { isLogged, getCookieValue } from './tools';
 import axios from 'axios';
+
+const searchForm = document.getElementById('search');
+const searchInput = document.getElementById('search-bar');
 const eventForm = document.querySelector('#eventForm');
+const eventsContainer = document.getElementById('eventsContainer'); 
+
+const searchSelect = document.getElementById('op'); 
+
 class Event {
-    constructor(titre, description, img, date, lieu, prix, capacite, id) {
+    constructor(titre, description, img, date, lieu, prix, capacite, categorie, id) {
         this.titre = titre;
         this.description = description;
         this.img = img;
@@ -10,6 +17,7 @@ class Event {
         this.lieu = lieu;
         this.prix = prix;
         this.capacite = capacite;
+        this.categorie = categorie;
         this.id = id;
     }
 
@@ -48,6 +56,8 @@ class Event {
         let capacite = document.createElement('p');
         capacite.textContent = this.capacite;
 
+        let categorie = document.createElement('p'); 
+        categorie.textContent = this.categorie; 
         let eventFooter = document.createElement('div');
         eventFooter.className = "eventFooter";
 
@@ -108,6 +118,7 @@ class Event {
 }
 
 
+
 document.addEventListener('click', (e) => {
     if (e.target.closest('.likeIcon')) {
         e.target.closest('.likeIcon').classList.toggle('liked');
@@ -135,9 +146,10 @@ document.addEventListener('click', (e) => {
         const date = eventForm.querySelector('#eventBirthdate').value;
         const ville = eventForm.querySelector('#eventVille').value;
         const description = eventForm.querySelector('#textar').value;
+        const categorie = eventForm.querySelector('#eventCategorie').value;
         const capacite = parseInt(eventForm.querySelector('#eventCapacite').value);
 
-        console.log(nom, prix, date, ville, description, capacite);
+        console.log(nom, prix, date, ville, description, categorie, capacite);
 
         axios.post('http://localhost:3000/post/addEvent', {
             nom: nom,
@@ -145,7 +157,10 @@ document.addEventListener('click', (e) => {
             lieu: ville,
             prix: prix,
             capacite: capacite,
+            token : token,
+            categorie: categorie,
             date: date,
+            
         })
             .then(response => {
                 console.log("Réponse du serveur :", response.data);
@@ -206,38 +221,102 @@ async function getEvent() {
     }
     return res
 }
+
+const searchButton = document.getElementById('search-btn');
+
+
+
+searchButton.addEventListener('click', () => {
+    const searchQuery = searchInput.value;
+    const selectedOption = searchSelect.value; 
+    console.log("Valeur de la recherche :", searchQuery);
+    console.log("Option sélectionnée :", selectedOption); 
+    rechercherEvenements(searchQuery, selectedOption); 
+});
+
+async function rechercherEvenements(recherche) {
+    try {
+      const bangbang = await getEvent();
+      eventsContainer.innerHTML = '';
+      bangbang.forEach(data => {
+        if (data.nom.toLowerCase().includes(recherche.toLowerCase()) ||
+            data.description.toLowerCase().includes(recherche.toLowerCase()) ||
+            data.date.toLowerCase().includes(recherche.toLowerCase()) ||
+            data.lieu.toLowerCase().includes(recherche.toLowerCase()) ||
+            data.prix.toString().includes(recherche.toLowerCase()) ||
+            data.id_utilisateur.toString().includes(recherche.toLowerCase()) ||
+            data.capacite.toString().includes(recherche.toLowerCase()) ||
+            data.categorie.toLowerCase().includes(recherche.toLowerCase()) ||
+            data.id.toString().includes(recherche.toLowerCase())) {
+          const [datePart, timePart] = data.date.split('T');
+          const [year, month, day] = datePart.split('-');
+          const formattedDate = `${day}/${month}/${year}`;
+          let eventObj = new Event(data.nom, data.description, "assets/imgEvent/tournoiFoot.png", formattedDate, data.lieu, data.prix, data.capacite, data.categorie, data.id);
+          let eventElement = eventObj.createEvent();
+          eventsContainer.appendChild(eventElement);
+        }
+      });
+    } catch (error) {
+      console.error("Une erreur s'est produite lors de la recherche des événements :", error);
+    }
+  }
+  
+
+  async function getRechercherEvenements(username) {
+    try {
+      const response = await axios.get(`http://localhost:3000/searchEventByUser?username=${username}`);
+      const events = response.data;
+   
+      eventsContainer.innerHTML = '';
+      events.forEach(data => {
+        const [datePart, timePart] = data.date.split('T');
+        const [year, month, day] = datePart.split('-');
+        const formattedDate = `${day}/${month}/${year}`;
+        let eventObj = new Event(data.nom, data.description, "assets/imgEvent/tournoiFoot.png", formattedDate, data.lieu, data.prix, data.capacite, data.categorie, data.id);
+        let eventElement = eventObj.createEvent();
+        eventsContainer.appendChild(eventElement);
+      });
+    } catch (error) {
+      console.error("Une erreur s'est produite lors de la recherche des événements par nom d'utilisateur :", error);
+    }
+  }
+
+searchButton.addEventListener('click', () => {
+    const searchQuery = searchInput.value;
+    rechercherEvenements(searchQuery);
+});
+
 async function leBang() {
-    const eventsContainer = document.getElementById('eventsContainer');
-    eventsContainer.innerHTML = ``;
+    eventsContainer.innerHTML = '';
     try {
         const bangbang = await getEvent();
-
-        console.log(bangbang);
-
         bangbang.forEach(data => {
-            // Diviser la chaîne en date et heure
             const [datePart, timePart] = data.date.split('T');
-
-            // Extraire la partie de la date
             const [year, month, day] = datePart.split('-');
-
-            // Former la date dans le format souhaité
             const formattedDate = `${day}/${month}/${year}`;
-
-            // Supposons que la classe Event soit définie ailleurs dans votre code
-            let eventObj = new Event(data.nom, data.description, "assets/imgEvent/tournoiFoot.png", formattedDate, data.lieu, data.prix, data.capacite, data.id);
-
-            // Supposons que eventsContainer soit défini ailleurs dans votre code
+            let eventObj = new Event(data.nom, data.description, "assets/imgEvent/tournoiFoot.png", formattedDate, data.lieu, data.prix, data.capacite, data.categorie, data.id);
             let eventElement = eventObj.createEvent();
-
-            // Supposons que eventsContainer soit défini ailleurs dans votre code
             eventsContainer.appendChild(eventElement);
+        });
+
+       
+        bangbang.forEach(event => {
+            console.log("Titre :", event.nom);
+            console.log("Description :", event.description);
+            console.log("Image :", "assets/imgEvent/tournoiFoot.png");
+            console.log("Date :", event.date);
+            console.log("Lieu :", event.lieu);
+            console.log("Prix :", event.prix);
+            console.log("Capacité :", event.capacite);
+            console.log("Catégorie :", event.categorie);
+            console.log("id_utilisateur:", event.id_utilisateur);
+            console.log("ID :", event.id);
+            console.log("----------------------------------------");
         });
     } catch (error) {
         console.error("Une erreur s'est produite :", error);
     }
-
 }
 
-// Appelez la fonction leBang pour l'exécuter
+
 leBang();

@@ -1,16 +1,17 @@
 body{
     padding: 0;
     margin: 0;
-    background-color: black;
+    background-color: white;
     display: flex;
     font-family: 'Poppins', sans-serif;
     position: relative;
+    --mainColor: rgb(139, 0, 0);
 }
 
 * {
     transition: 250ms;
     font-family: 'Poppins', sans-serif;
-    color: white;
+    color: black;
 }
 
 /* Nav */
@@ -21,6 +22,8 @@ nav {
     width: fit-content;
     padding: 30px;
     gap: 15px;
+    background-color: var(--mainColor);
+    height: 100vh;
 }
 
 nav a {
@@ -79,9 +82,9 @@ nav img {
     flex-direction: column;
     padding: 40px;
     gap: 20px;
-    border-bottom: 1px solid #fec816;
-    border-right: 1px solid #fec816;
-    border-left: 1px solid #fec816;
+    border-bottom: 1px solid var(--mainColor);
+    border-right: 1px solid var(--mainColor);
+    border-left: 1px solid var(--mainColor);
 }
 
 .eventContainer img {
@@ -111,14 +114,14 @@ nav img {
     gap: 25px;
 }
 .eventFooter button{
-    background-color: #fec816;
+    background-color: var(--mainColor);
     border-radius: 5px;
     border: none;
     color: white;
     padding: 10px;
 }
 .eventFooter button:hover{
-    box-shadow: 0 0 7px #fec816;
+    box-shadow: 0 0 7px var(--mainColor);
 }
 
 .likeIcon svg{
@@ -169,7 +172,7 @@ nav img {
     justify-content: space-around;
     justify-content: center;
     margin-top: 30px;
-    border: 1px solid #fec816;
+    border: 1px solid var(--mainColor);
     padding: 0px;
     user-select: none;
 }
@@ -184,7 +187,7 @@ nav img {
 }
 
 .selectedOnglet {
-    background-color: #fec816;
+    background-color: var(--mainColor);
 }
 
 .notSelectedForm {
@@ -197,7 +200,7 @@ nav img {
     flex-direction: column;
     gap: 20px;
     padding: 20px;
-    border: 1px solid #fec816;
+    border: 1px solid var(--mainColor);
     border-radius: 20px;
 }
 .forms h2 {
@@ -228,7 +231,7 @@ nav img {
     outline: none;
 }
 .forms input:hover {
-    border: 1px solid #fec816;
+    border: 1px solid var(--mainColor);
 }
 .forms select {
     padding: 13px;
@@ -241,11 +244,11 @@ nav img {
     color: white;
 }
 .forms select:hover{
-    border: 1px solid #fec816;
+    border: 1px solid var(--mainColor);
 }
 .forms button{
     width: fit-content;
-    background-color: #fec816;
+    background-color: var(--mainColor);
     margin-top: 10px;
     padding: 10px;
     color: white;

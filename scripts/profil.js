@@ -110,7 +110,7 @@ class Joined {
 window.addEventListener('load', async () => {
   let token = getCookieValue('loginToken');
   if (await isLogged(token)) {
-    axios.get(`http://m2l.site:3000/get/utilisateur?token=${token}`)
+    axios.get(`http://localhost:3000/get/utilisateur?token=${token}`)
       .then((response) => {
         document.getElementById('nom').textContent = response.data[0].nom;
         document.getElementById('prenom').textContent = response.data[0].prenom;
@@ -125,7 +125,7 @@ window.addEventListener('load', async () => {
       .catch((error) => {
         console.error('Erreur lors de la requête:', error);
       });
-    axios.get(`http://m2l.site:3000/get/getJoinedEvents?token=${token}`)
+    axios.get(`http://localhost:3000/get/getJoinedEvents?token=${token}`)
       .then((response) => {
         const eventsContainer = document.getElementById('joinedContainer');
         eventsContainer.innerHTML = ``;
@@ -167,7 +167,7 @@ document.addEventListener('click', (e) => {
   }
   if (e.target.classList.contains('newAvatar')) {
     const avatar = e.target.alt;
-    axios.post('http://m2l.site:3000/update/updateAvatar', {
+    axios.post('http://localhost:3000/update/updateAvatar', {
       avatar: avatar,
       email: getCookieValue('mail')
     })

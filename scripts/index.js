@@ -170,7 +170,7 @@ document.addEventListener('click', (e) => {
 
         console.log(nom, prix, date, ville, description, categorie, capacite);
 
-        axios.post('http://m2l.site:3000/post/addEvent', {
+        axios.post('http://localhost:3000/post/addEvent', {
             nom: nom,
             description: description,
             lieu: ville,
@@ -195,7 +195,7 @@ document.addEventListener('click', (e) => {
         const id = e.target.closest('.eventContainer').id;
         const token = getCookieValue('loginToken');
         console.log(id, token);
-        axios.post('http://m2l.site:3000/post/addParticipation', {
+        axios.post('http://localhost:3000/post/addParticipation', {
             event_id: id,
             token: token
         })
@@ -210,7 +210,7 @@ document.addEventListener('click', (e) => {
     if (e.target.classList.contains('joined')) {
         const id = e.target.closest('.eventContainer').id;
         const token = getCookieValue('loginToken');
-        axios.post('http://m2l.site:3000/post/deleteParticipation', {
+        axios.post('http://localhost:3000/post/deleteParticipation', {
             event_id: id,
             token: token
         })
@@ -230,7 +230,7 @@ document.addEventListener('click', (e) => {
 async function getEvent() {
     const res = []
     try {
-        await axios.get('http://m2l.site:3000/get/evenement')
+        await axios.get('http://localhost:3000/get/evenement')
             .then(response => {
                 res.push(...response.data);
             })

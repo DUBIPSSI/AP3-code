@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export async function isLogged(token) {
     try {
-        const response = await axios.get(`http://m2l.site:3000/get/user?token=${token}`);
+        const response = await axios.get(`http://localhost:3000/get/user?token=${token}`);
         return response.data === true;
     } catch (error) {
         console.error('Erreur lors de la requête:', error);
